@@ -67,12 +67,12 @@ class DatabaseSeeder extends Seeder
             TeamMember::updateOrCreate(['name' => $member['name']], $member);
         }
 
-        // 3. Seed Gallery Images from data/gallery.json if available
-        $galleryFile = base_path('data/gallery.json');
+        // 3. Seed Gallery Images from database/data/gallery_seed.json
+        $galleryFile = database_path('data/gallery_seed.json');
         if (File::exists($galleryFile)) {
             $galleryList = json_decode(File::get($galleryFile), true) ?: [];
             foreach ($galleryList as $img) {
-                $imgUrl = $img['imageUrl'] ?? ($img['imageUrls'][0] ?? null);
+                $imgUrl = $img['image_url'] ?? ($img['imageUrl'] ?? null);
                 if ($imgUrl) {
                     GalleryImage::updateOrCreate(
                         ['image_url' => $imgUrl],
@@ -85,7 +85,25 @@ class DatabaseSeeder extends Seeder
             }
         }
 
-        // 4. Seed Site Settings (including Zenith Bank Details)
+        // 4. Seed Events from database/data/events_seed.json
+        $eventsFile = database_path('data/events_seed.json');
+        if (File::exists($eventsFile)) {
+            $eventsList = json_decode(File::get($eventsFile), true) ?: [];
+            foreach ($eventsList as $evt) {
+                Event::updateOrCreate(
+                    ['slug' => $evt['slug'] ?? \Illuminate\Support\Str::slug($evt['title'])],
+                    [
+                        'title' => $evt['title'],
+                        'description' => $evt['description'],
+                        'event_date' => $evt['event_date'] ?? now(),
+                        'image_url' => $evt['image_url'] ?? null,
+                        'image_urls' => $evt['image_urls'] ?? [],
+                    ]
+                );
+            }
+        }
+
+        // 5. Seed Site Settings (including Zenith Bank Details)
         SiteSetting::set('site', [
             'name' => 'Temitope Initiative',
             'logoUrl' => 'https://res.cloudinary.com/dfujzs9ml/image/upload/v1774493285/temitope_initiative/t653vvukb9rj1q1zdh0y.png',
@@ -109,6 +127,16 @@ class DatabaseSeeder extends Seeder
                 'sort_code' => '057080277',
                 'branch' => 'KEBBI HOUSE BRANCH'
             ]
+        ]);
+
+        SiteSetting::set('bank', [
+            'bank_name' => 'Zenith Bank PLC',
+            'account_name' => 'TEMITOPE SOCIETAL SUSTAINABILITY AND DEVELOPMENT INITIATIVE (TSSDI)',
+            'account_ngn' => '1311816265',
+            'account_usd' => '5075911468',
+            'swift' => 'ZEIBNGLA',
+            'sort_code' => '057080277',
+            'branch' => 'KEBBI HOUSE BRANCH'
         ]);
 
         SiteSetting::set('admin', [
