@@ -1,0 +1,15 @@
+# robots.txt for Temitope Initiative
+# Website: https://www.temitopessdi.org/
+
+User-agent: *
+Allow: /
+Allow: /gallery
+Allow: /uploads/
+
+# Protect Private Admin Portal and API endpoints from indexing
+Disallow: /surprise
+Disallow: /admin
+Disallow: /api/
+
+# Sitemap Location
+Sitemap: https://www.temitopessdi.org/sitemap.xml

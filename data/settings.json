@@ -1,0 +1,60 @@
+{
+  "admin": {
+    "id": "admin",
+    "password": "Surprise",
+    "updatedAt": {
+      "type": "firestore/timestamp/1.0",
+      "seconds": 1774463266,
+      "nanoseconds": 695000000
+    },
+    "username": "Surprise-MFs"
+  },
+  "maintenance": {
+    "id": "maintenance",
+    "estimatedEndTime": {
+      "type": "firestore/timestamp/1.0",
+      "seconds": 1774674000,
+      "nanoseconds": 0
+    },
+    "isUnderMaintenance": false,
+    "adminPassword": "Surprise"
+  },
+  "site": {
+    "id": "site",
+    "addresses": [
+      "No 9, 32 crescent 3rd Ave, Gwarinpa Estate, Gwarinpa 900108, Federal Capital Territory"
+    ],
+    "socials": [
+      {
+        "platform": "Facebook",
+        "url": "#",
+        "enabled": true
+      },
+      {
+        "url": "#",
+        "platform": "Instagram",
+        "enabled": true
+      },
+      {
+        "url": "",
+        "enabled": false,
+        "platform": "Twitter"
+      },
+      {
+        "platform": "LinkedIn",
+        "enabled": false,
+        "url": ""
+      }
+    ],
+    "logoUrl": "https://res.cloudinary.com/dfujzs9ml/image/upload/v1774493285/temitope_initiative/t653vvukb9rj1q1zdh0y.png",
+    "adminPassword": "Surprise",
+    "phones": [
+      "+2348033294044",
+      "+2348032439434"
+    ],
+    "emails": [
+      "contact@temitopessdi.org"
+    ],
+    "name": "Temitope Initiative "
+  }
+}
