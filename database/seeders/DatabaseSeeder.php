@@ -27,44 +27,22 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        // 2. Seed Team Members
-        $teamData = [
-            [
-                'name' => 'Dr. Mrs. Elizabeth Egbetokun',
-                'role' => 'Executive Director Temitope (SSDI)',
-                'bio' => "Dr. Mrs. Elizabeth Egbetokun is a distinguished humanitarian, a visionary leader, and the driving force behind the Temitope Societal Sustainability and Development Initiative (TSSDI). With a heart dedicated to service and a mind focused on sustainable progress, she has become a beacon of hope for the underserved across the nation.\n\nHer mission through TSSDI is simple yet profound: to build a more equitable society where every individual is empowered to reach their full potential.\n\nA Legacy of Purposeful Action\nDr. Egbetokun’s work is characterized by compassion, integrity, and a relentless pursuit of excellence. Under her guidance, TSSDI has pioneered life-changing programs in:\n\nEconomic Empowerment: Equipping women and youth with the skills and resources to achieve financial independence.\n\nEducation & Advocacy: Ensuring that quality learning and mentorship are accessible to those in remote and marginalized communities.\n\nHealth & Wellness: Leading community-focused medical interventions and maternal health initiatives that save lives.\n\nEnvironmental Stewardship: Promoting sustainable practices to protect our shared future.\n\nLeading with Heart\nBeyond her philanthropic endeavors, Dr. Egbetokun is celebrated for her transformative leadership as the President of the Police Officers’ Wives Association (POWA), where she has redefined welfare and unity for thousands of families.\n\nOften described as a \"mother to the motherless,\" her life’s work serves as a powerful testament to the impact of selfless leadership. Through TSSDI, Dr. Elizabeth Egbetokun continues to bridge the gap between vulnerability and opportunity, leaving an indelible mark of kindness and progress on society.",
-                'image_url' => '/uploads/file-1774602405327-507864585.webp',
-                'is_founder' => true,
-                'order' => 1,
-            ],
-            [
-                'name' => 'Mrs Becky Oghale Akika',
-                'role' => 'Coordinator',
-                'bio' => "Mrs. Becky Oghale Akika serves as the Coordinator for the Temitope Societal Sustainability and Development Initiative (TSSDI). In this role, she oversees the planning, execution, and day-to-day management of the organization's community programs and sustainability initiatives. Dedicated to driving positive social change, Mrs. Akika works closely with volunteers, partners, and stakeholders to ensure TSSDI’s grassroots projects successfully empower and uplift vulnerable communities.",
-                'image_url' => '/uploads/file-1780857631510-728149180.webp',
-                'is_founder' => false,
-                'order' => 2,
-            ],
-            [
-                'name' => 'Mrs. Charity Hassan',
-                'role' => 'Secretary / Accountant',
-                'bio' => "Mrs. Charity Hassan holds the dual responsibility of Secretary and Accountant for the Temitope Societal Sustainability and Development Initiative (TSSDI). She manages the organization’s financial records, budgeting, and compliance, while simultaneously coordinating administrative operations and board correspondence. With her strong focus on accountability, transparency, and organizational efficiency, Mrs. Hassan ensures that TSSDI’s resources are diligently managed to maximize the impact of its community sustainability programs.",
-                'image_url' => '/uploads/file-1780858120435-327161954.webp',
-                'is_founder' => false,
-                'order' => 3,
-            ],
-            [
-                'name' => 'Mr Salisu Nuhu',
-                'role' => 'Public Relations Officer (PRO)',
-                'bio' => "Salisu Nuhu is the Public Relations Officer for the Temitope Societal Sustainability and Development Initiative (TSSDI). He manages the organization’s communication strategies, media relations, and community outreach efforts. Dedicated to amplifying TSSDI’s mission, Salisu ensures that the initiative's advocacy programs, community milestones, and sustainability projects are effectively communicated to partners, stakeholders, and the public to foster deep, lasting engagement.",
-                'image_url' => '/uploads/file-1780857906522-532151003.webp',
-                'is_founder' => false,
-                'order' => 4,
-            ],
-        ];
-
-        foreach ($teamData as $member) {
-            TeamMember::updateOrCreate(['name' => $member['name']], $member);
+        // 2. Seed Team Members (from database/data/team_seed.json)
+        $teamFile = database_path('data/team_seed.json');
+        if (File::exists($teamFile)) {
+            $teamData = json_decode(File::get($teamFile), true) ?: [];
+            foreach ($teamData as $member) {
+                TeamMember::updateOrCreate(
+                    ['name' => $member['name']],
+                    [
+                        'role' => $member['role'],
+                        'bio' => $member['bio'],
+                        'image_url' => $member['image_url'],
+                        'is_founder' => $member['is_founder'] ?? false,
+                        'order' => $member['order'] ?? 1,
+                    ]
+                );
+            }
         }
 
         // 3. Seed Gallery Images from database/data/gallery_seed.json
