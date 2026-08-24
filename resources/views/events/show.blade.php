@@ -370,8 +370,8 @@
                     </div>
                     <h4 class="font-serif font-bold text-gray-900 text-base mb-1">Have Questions?</h4>
                     <p class="text-xs text-gray-500 mb-4 leading-relaxed">Reach out to our communications team for outreach partnership opportunities.</p>
-                    <a href="mailto:info@temitopessdi.org" class="text-xs font-bold text-royal-blue hover:underline block">
-                        info@temitopessdi.org
+                    <a href="mailto:support@temitopessdi.org" class="text-xs font-bold text-royal-blue hover:underline block">
+                        support@temitopessdi.org
                     </a>
                 </div>
 

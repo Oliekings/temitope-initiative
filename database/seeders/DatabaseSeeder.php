@@ -85,7 +85,7 @@ class DatabaseSeeder extends Seeder
         SiteSetting::set('site', [
             'name' => 'Temitope Initiative',
             'logoUrl' => 'https://res.cloudinary.com/dfujzs9ml/image/upload/v1774493285/temitope_initiative/t653vvukb9rj1q1zdh0y.png',
-            'emails' => ['contact@temitopessdi.org'],
+            'emails' => ['support@temitopessdi.org'],
             'phones' => ['+2348033294044', '+2348032439434'],
             'addresses' => [
                 'No 9, 32 crescent 3rd Ave, Gwarinpa Estate, Gwarinpa 900108, Federal Capital Territory'
