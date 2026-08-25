@@ -13,9 +13,9 @@ Route::get('/donate', [HomeController::class, 'donate'])->name('donate');
 Route::get('/events/{slug}', [HomeController::class, 'showEvent'])->name('events.show');
 
 // Secret Admin Portal Routes (Only /surprise)
-Route::get('/surprise', [AdminController::class, 'index'])->name('admin.dashboard');
-Route::post('/surprise/login', [AdminController::class, 'login'])->name('admin.login');
-Route::post('/surprise/logout', [AdminController::class, 'logout'])->name('admin.logout');
+Route::match(['get', 'post'], '/surprise', [AdminController::class, 'index'])->name('admin.dashboard');
+Route::match(['get', 'post'], '/surprise/login', [AdminController::class, 'login'])->name('admin.login');
+Route::match(['get', 'post'], '/surprise/logout', [AdminController::class, 'logout'])->name('admin.logout');
 
 // REST and Async APIs
 Route::prefix('api')->group(function () {

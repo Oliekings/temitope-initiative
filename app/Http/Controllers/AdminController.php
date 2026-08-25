@@ -114,17 +114,26 @@ class AdminController extends Controller
             'event_date' => $request->input('date') ? date('Y-m-d H:i:s', strtotime($request->input('date'))) : now(),
         ]);
 
-        // Automatically sync event images to the gallery
+        // Automatically sync event images to the gallery in 1 fast bulk query
         $allEventImages = array_filter(array_unique(array_merge([$imageUrl], (array) $imageUrls)));
-        foreach ($allEventImages as $url) {
-            if (!empty($url)) {
-                GalleryImage::firstOrCreate(
-                    ['image_url' => $url],
-                    [
-                        'title' => $event->title,
-                        'description' => Str::limit($event->description, 160),
-                    ]
-                );
+        if (!empty($allEventImages)) {
+            $existingUrls = GalleryImage::whereIn('image_url', $allEventImages)->pluck('image_url')->toArray();
+            $newUrls = array_diff($allEventImages, $existingUrls);
+            if (!empty($newUrls)) {
+                $inserts = [];
+                $now = now();
+                $title = $event->title;
+                $desc = Str::limit($event->description, 160);
+                foreach ($newUrls as $newUrl) {
+                    $inserts[] = [
+                        'image_url' => $newUrl,
+                        'title' => $title,
+                        'description' => $desc,
+                        'created_at' => $now,
+                        'updated_at' => $now,
+                    ];
+                }
+                GalleryImage::insert($inserts);
             }
         }
 
@@ -159,17 +168,26 @@ class AdminController extends Controller
             'event_date' => $request->input('date') ? date('Y-m-d H:i:s', strtotime($request->input('date'))) : $event->event_date,
         ]);
 
-        // Automatically sync event images to the gallery
+        // Automatically sync event images to the gallery in 1 fast bulk query
         $allEventImages = array_filter(array_unique(array_merge([$imageUrl], (array) $imageUrls)));
-        foreach ($allEventImages as $url) {
-            if (!empty($url)) {
-                GalleryImage::firstOrCreate(
-                    ['image_url' => $url],
-                    [
-                        'title' => $event->title,
-                        'description' => Str::limit($event->description, 160),
-                    ]
-                );
+        if (!empty($allEventImages)) {
+            $existingUrls = GalleryImage::whereIn('image_url', $allEventImages)->pluck('image_url')->toArray();
+            $newUrls = array_diff($allEventImages, $existingUrls);
+            if (!empty($newUrls)) {
+                $inserts = [];
+                $now = now();
+                $title = $event->title;
+                $desc = Str::limit($event->description, 160);
+                foreach ($newUrls as $newUrl) {
+                    $inserts[] = [
+                        'image_url' => $newUrl,
+                        'title' => $title,
+                        'description' => $desc,
+                        'created_at' => $now,
+                        'updated_at' => $now,
+                    ];
+                }
+                GalleryImage::insert($inserts);
             }
         }
 
